@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from viktorina_orm import Viktorina, LaimetojuRezultatai
 
-engine = create_engine('sqlite:///viktorina.db', echo=False)
+engine = create_engine("sqlite:///viktorina.db", echo=False)
 Session = sessionmaker(bind=engine)
 session = Session()
 questions = session.query(Viktorina).all()
@@ -43,8 +43,12 @@ def klausimas():
         question_label = Label(langas, text=current_question.question)
         question_label.pack()
 
-        answer_options = [current_question.answer_1, current_question.answer_2, current_question.answer_3,
-                          current_question.answer_4]
+        answer_options = [
+            current_question.answer_1,
+            current_question.answer_2,
+            current_question.answer_3,
+            current_question.answer_4,
+        ]
 
         for i, answer_option in enumerate(answer_options):
             button = Button(langas, text=answer_option, command=lambda idx=i: patikrinti_atsakyma(idx))
@@ -64,7 +68,6 @@ def patikrinti_atsakyma(selected_index):
         messagebox.showinfo("Teisingai", "Atsakymas teisingas!")
     else:
         messagebox.showinfo("Neteisingai", "Atsakymas neteisingas.")
-
 
     klausimas()
 
