@@ -4,15 +4,15 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from viktorina_orm import Viktorina
 from rezultatai import LaimetojuRezultatai
+import settings
 
-klausimu_kiekis = 3  # nurodyti skaiciu + 1
 engine_viktorina = create_engine("sqlite:///viktorina.db", echo=False)
 engine_rezultatai = create_engine("sqlite:///rezultatai.db", echo=False)
 Session_viktorina = sessionmaker(bind=engine_viktorina)
 Session_rezultatai = sessionmaker(bind=engine_rezultatai)
 session_viktorina = Session_viktorina()
 session_rezultatai = Session_rezultatai()
-questions = session_viktorina.query(Viktorina).all()[:klausimu_kiekis]
+questions = session_viktorina.query(Viktorina).all()[:settings.klausimu_kiekis]
 
 langas = Tk()
 current_question_index = 0
@@ -36,10 +36,11 @@ def klausimas():
     if current_question is not None:
         # Iš lango pašalinti ankstesnius klausimų ir atsakymų pasirinkimus
         question_label.pack_forget()
-        for button in answer_buttons:
-            button.pack_forget()
+        for button in langas.winfo_children():
+            if type(button) == Button:
+                button.pack_forget()
 
-    if current_question_index < len(questions) - 1:
+    if current_question_index < len(questions):
         # Gauti dabartinį klausimą iš sąrašo
         current_question = questions[current_question_index]
 
@@ -125,7 +126,7 @@ def naujas_zaidimas():
     # iseiti_button.pack_forget()
 
     global questions
-    questions = session_viktorina.query(Viktorina).all()[:klausimu_kiekis]
+    questions = session_viktorina.query(Viktorina).all()[:settings.klausimu_kiekis]
     global current_question_index
     current_question_index = 0
     global current_question
