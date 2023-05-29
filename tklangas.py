@@ -12,7 +12,7 @@ Session_viktorina = sessionmaker(bind=engine_viktorina)
 Session_rezultatai = sessionmaker(bind=engine_rezultatai)
 session_viktorina = Session_viktorina()
 session_rezultatai = Session_rezultatai()
-questions = session_viktorina.query(Viktorina).all()[:settings.klausimu_kiekis]
+questions = session_viktorina.query(Viktorina).all()[: settings.klausimu_kiekis]
 
 langas = Tk()
 current_question_index = 0
@@ -34,17 +34,14 @@ def klausimas():
     global current_question_index
 
     if current_question is not None:
-        # Iš lango pašalinti ankstesnius klausimų ir atsakymų pasirinkimus
         question_label.pack_forget()
         for button in langas.winfo_children():
             if type(button) == Button:
                 button.pack_forget()
 
     if current_question_index < len(questions):
-        # Gauti dabartinį klausimą iš sąrašo
         current_question = questions[current_question_index]
 
-        # Rodyti klausimo ir atsakymų pasirinkimus
         question_label = Label(langas, text=current_question.question)
         question_label.pack()
 
@@ -62,7 +59,6 @@ def klausimas():
 
         current_question_index += 1
     else:
-        # Sąraše daugiau klausimų nėra
         messagebox.showinfo("Viktorina baigta", "Atsakėte į visus klausimus.")
         issaugoti_rezultatus()
 
@@ -120,13 +116,8 @@ def naikinti_rezultatus():
 
 
 def naujas_zaidimas():
-    # global pradeti_vel
-    # global iseiti
-    # pradeti_vel_button.pack_forget()
-    # iseiti_button.pack_forget()
-
     global questions
-    questions = session_viktorina.query(Viktorina).all()[:settings.klausimu_kiekis]
+    questions = session_viktorina.query(Viktorina).all()[: settings.klausimu_kiekis]
     global current_question_index
     current_question_index = 0
     global current_question

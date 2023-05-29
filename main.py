@@ -1,11 +1,7 @@
-from sqlalchemy import create_engine
-from datetime import datetime
 from sqlalchemy.orm import sessionmaker
-from viktorina_orm import Viktorina, engine, LaimetojuRezultatai
+from viktorina_orm import Viktorina, engine
+from rezultatai import LaimetojuRezultatai
 
-# from rezultatai import LaimetojuRezultatai
-
-# from random import choices
 
 Session = sessionmaker(bind=engine)
 session = Session()
