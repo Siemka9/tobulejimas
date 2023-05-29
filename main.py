@@ -1,16 +1,13 @@
-from sqlalchemy import create_engine
-from datetime import datetime
 from sqlalchemy.orm import sessionmaker
-from viktorina_orm import Viktorina, engine, LaimetojuRezultatai
-# from rezultatai import LaimetojuRezultatai
+from viktorina_orm import Viktorina, engine
+from rezultatai import LaimetojuRezultatai
 
-# from random import choices
 
 Session = sessionmaker(bind=engine)
 session = Session()
 viktorinos_duomenys = session.query(Viktorina).all()
 
-atrinktos_eilutes = (viktorinos_duomenys)
+atrinktos_eilutes = viktorinos_duomenys
 taskai = 0
 
 for eilute in atrinktos_eilutes:
